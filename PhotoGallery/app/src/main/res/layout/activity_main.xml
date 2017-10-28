@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.skype.hrishi.photogallery.MainActivity">
+
+    <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:fillViewport="true">
+
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="368dp"
+        android:layout_height="495dp"
+        android:orientation="vertical">
+        <TextView
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:text="@string/app_photos" />
+        <TextView
+            android:id="@+id/photosSelected"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:text="@string/app_photos" />
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/imagegallery"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+        <TextView
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:text="@string/app_videos" />
+        <TextView
+            android:id="@+id/videosSelected"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:text="@string/app_photos" />
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/videogallery"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"/>
+        <Button
+            android:id="@+id/fabButton"
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:layout_gravity="right"
+            android:text="Show Selected" />
+        <TextView
+            android:id="@+id/selectedphotoslabel"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:text="@string/app_selected_photos"
+            android:visibility="invisible"/>
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/imagegalleryselected"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="invisible"/>
+        <TextView
+            android:id="@+id/selectedvideoslabel"
+            android:layout_height="wrap_content"
+            android:layout_width="wrap_content"
+            android:text="@string/app_selected_videos"
+            android:visibility="invisible"/>
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/videogalleryselected"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:visibility="invisible"/>
+    </LinearLayout>
+
+    </ScrollView>
+</android.support.constraint.ConstraintLayout>

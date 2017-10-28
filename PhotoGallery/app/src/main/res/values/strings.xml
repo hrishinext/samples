@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">PhotoGallery</string>
+    <string name="app_photos">Photos</string>
+    <string name="app_videos">Videos</string>
+    <string name="assets_selected">%1$d of %2$d selected</string>
+    <string name="app_selected_photos">Selected Photos</string>
+    <string name="app_selected_videos">Selected Videos</string>
+</resources>
