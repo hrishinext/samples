@@ -1,6 +1,7 @@
 package com.skype.hrishi.photogallery;
 
 import android.Manifest;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.net.Uri;
@@ -20,10 +21,13 @@ import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class MainActivity extends AppCompatActivity {
 
+    static final String SELECTION_PREFS = "SelectionPrefs";
     static final String STATE_SELECTED_IMAGES = "selectedImages";
     static final String STATE_SELECTED_VIDEOS = "selectedVideos";
 
@@ -41,12 +45,15 @@ public class MainActivity extends AppCompatActivity {
     private Button mSelectButton;
     private ArrayList<String> mSelectedPhotosUri;
     private ArrayList<String> mSelectedItemsVideo;
+    private SharedPreferences mSharedPrefs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        //Shared Prefs
+        mSharedPrefs = getSharedPreferences(SELECTION_PREFS, MODE_PRIVATE);
         //Photos selected
         mPhotosSelectedTextView = (TextView) findViewById(R.id.photosSelected);
         //Photo Recycler View
@@ -115,31 +122,20 @@ public class MainActivity extends AppCompatActivity {
                     new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
                     1);
         } else {
-            ArrayList<String> savedImages = new ArrayList<>();
-            ArrayList<String> savedVideos = new ArrayList<>();
-            if (savedInstanceState != null) {
-                savedImages = savedInstanceState.getStringArrayList(STATE_SELECTED_IMAGES);
-                savedVideos = savedInstanceState.getStringArrayList(STATE_SELECTED_VIDEOS);
-            }
-            if (savedImages != null) {
-                mPhotoContentViewAdapter.setCheckBoxPhotosSelection(savedImages);
+            Set<String> storedImages = mSharedPrefs.getStringSet(STATE_SELECTED_IMAGES, null);
+            if (storedImages != null) {
+                ArrayList<String> list = new ArrayList<String>(storedImages);
+                mPhotoContentViewAdapter.setCheckBoxPhotosSelection(list);
             }
             getAllShownImagesPath();
-            if (savedVideos != null) {
-                mVideoContentViewAdapter.setCheckBoxVideosSelection(savedVideos);
+            Set<String> storedVideos = mSharedPrefs.getStringSet(STATE_SELECTED_VIDEOS, null);
+            if (storedVideos != null) {
+                ArrayList<String> list = new ArrayList<String>(storedVideos);
+                mVideoContentViewAdapter.setCheckBoxVideosSelection(list);
             }
             getAllShownVideosPath();
         }
         EventBus.getDefault().register(this);
-    }
-
-    //Save your selection
-    @Override
-    public void onSaveInstanceState(Bundle savedInstanceState) {
-        savedInstanceState.putStringArrayList(STATE_SELECTED_IMAGES, mSelectedPhotosUri);
-        savedInstanceState.putStringArrayList(STATE_SELECTED_VIDEOS, mSelectedItemsVideo);
-
-        super.onSaveInstanceState(savedInstanceState);
     }
 
     @Override
@@ -222,5 +218,11 @@ public class MainActivity extends AppCompatActivity {
             mVideosSelectedTextView.setText(text);
             mSelectedItemsVideo = event.getSelectedItemsVideo();
         }
+        SharedPreferences.Editor editor = mSharedPrefs.edit();
+        Set<String> storedPhotos = new HashSet(mSelectedPhotosUri);
+        editor.putStringSet(STATE_SELECTED_IMAGES, storedPhotos);
+        Set<String> storedVideos = new HashSet(mSelectedItemsVideo);
+        editor.putStringSet(STATE_SELECTED_VIDEOS, storedVideos);
+        editor.apply();
     };
 }
