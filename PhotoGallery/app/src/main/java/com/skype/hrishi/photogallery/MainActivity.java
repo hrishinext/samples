@@ -19,9 +19,13 @@ import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
 import org.greenrobot.eventbus.ThreadMode;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
+
+    static final String STATE_SELECTED_IMAGES = "selectedImages";
+    static final String STATE_SELECTED_VIDEOS = "selectedVideos";
 
     private TextView mPhotosSelectedTextView;
     private RecyclerView mRecyclerImageView;
@@ -35,8 +39,8 @@ public class MainActivity extends AppCompatActivity {
     private ContentViewAdapter mSelectedVideoContentViewAdapter;
     private LinearLayoutManager mLinearLayoutManager;
     private Button mSelectButton;
-    private List<Uri> mSelectedPhotosUri;
-    private List<Long> mSelectedItemsVideo;
+    private ArrayList<String> mSelectedPhotosUri;
+    private ArrayList<String> mSelectedItemsVideo;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -111,10 +115,41 @@ public class MainActivity extends AppCompatActivity {
                     new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
                     1);
         } else {
+            ArrayList<String> savedImages = new ArrayList<>();
+            ArrayList<String> savedVideos = new ArrayList<>();
+            if (savedInstanceState != null) {
+                savedImages = savedInstanceState.getStringArrayList(STATE_SELECTED_IMAGES);
+                savedVideos = savedInstanceState.getStringArrayList(STATE_SELECTED_VIDEOS);
+            }
+            if (savedImages != null) {
+                mPhotoContentViewAdapter.setCheckBoxPhotosSelection(savedImages);
+            }
             getAllShownImagesPath();
+            if (savedVideos != null) {
+                mVideoContentViewAdapter.setCheckBoxVideosSelection(savedVideos);
+            }
             getAllShownVideosPath();
         }
         EventBus.getDefault().register(this);
+    }
+
+    //Save your selection
+    @Override
+    public void onSaveInstanceState(Bundle savedInstanceState) {
+        savedInstanceState.putStringArrayList(STATE_SELECTED_IMAGES, mSelectedPhotosUri);
+        savedInstanceState.putStringArrayList(STATE_SELECTED_VIDEOS, mSelectedItemsVideo);
+
+        super.onSaveInstanceState(savedInstanceState);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
     }
 
     @Override
@@ -152,7 +187,7 @@ public class MainActivity extends AppCompatActivity {
                 int imageID = cursor.getInt(cursor.getColumnIndexOrThrow(MediaStore.Images.Media._ID));
                 Uri uri = Uri.withAppendedPath(MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
                         Integer.toString(imageID));
-                mPhotoContentViewAdapter.add(mPhotoContentViewAdapter.getItemCount(), uri);
+                mPhotoContentViewAdapter.add(mPhotoContentViewAdapter.getItemCount(), uri.toString());
             } while (cursor.moveToNext());
         }
         String text = String.format(getResources().getString(R.string.assets_selected), 0, mPhotoContentViewAdapter.getItemCount());
@@ -169,7 +204,7 @@ public class MainActivity extends AppCompatActivity {
         if (cursor.moveToFirst()) {
             do {
                 long videoID = cursor.getInt(cursor.getColumnIndexOrThrow(MediaStore.Video.Media._ID));
-                mVideoContentViewAdapter.addVideo(mVideoContentViewAdapter.getItemCount(), videoID);
+                mVideoContentViewAdapter.addVideo(mVideoContentViewAdapter.getItemCount(), String.valueOf(videoID));
             } while (cursor.moveToNext());
         }
         String text = String.format(getResources().getString(R.string.assets_selected), 0, mVideoContentViewAdapter.getItemCount());

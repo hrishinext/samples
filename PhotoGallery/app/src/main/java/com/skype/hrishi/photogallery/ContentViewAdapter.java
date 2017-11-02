@@ -30,10 +30,10 @@ import java.util.List;
 
 public class ContentViewAdapter extends RecyclerView.Adapter<ContentViewAdapter.ItemHolder> {
 
-    private List<Uri> itemsUri;
-    private List<Long> itemsVideo;
-    private List<Uri> selectedPhotosUri;
-    private List<Long> selectedItemsVideo;
+    private List<String> itemsUri;
+    private List<String> itemsVideo;
+    private ArrayList<String> selectedPhotosUri;
+    private ArrayList<String> selectedItemsVideo;
     private Context mContext;
     private LayoutInflater layoutInflater;
     private int assetType;
@@ -57,8 +57,13 @@ public class ContentViewAdapter extends RecyclerView.Adapter<ContentViewAdapter.
 
     @Override
     public void onBindViewHolder(final ContentViewAdapter.ItemHolder holder, int position) {
+
        if (assetType == AssetType.IMAGE) {
-           final Uri targetUri = itemsUri.get(position);
+           final String targetUri = itemsUri.get(position);
+
+           if (checkItemSelected(targetUri)) {
+               holder.checkBoxView.setVisibility(View.VISIBLE);
+           }
 
            if (targetUri != null) {
                Picasso.with(mContext)
@@ -67,6 +72,7 @@ public class ContentViewAdapter extends RecyclerView.Adapter<ContentViewAdapter.
                        .centerCrop()
                        .into(holder.imageView);
            }
+
            holder.imageView.setOnClickListener(new View.OnClickListener() {
                @Override
                public void onClick(View v) {
@@ -82,11 +88,16 @@ public class ContentViewAdapter extends RecyclerView.Adapter<ContentViewAdapter.
            });
 
        } else {
-           final Long targetID = itemsVideo.get(position);
+           final String targetID = itemsVideo.get(position);
+
+           if (checkItemVideo(targetID)) {
+               holder.checkBoxView.setVisibility(View.VISIBLE);
+           }
+
            if (targetID != null) {
                Bitmap bitmap = MediaStore.Video.Thumbnails.getThumbnail(
                        mContext.getContentResolver(),
-                       targetID,
+                       Long.parseLong(targetID),
                        MediaStore.Video.Thumbnails.MINI_KIND, null);
                holder.setImageView(bitmap);
            }
@@ -106,6 +117,24 @@ public class ContentViewAdapter extends RecyclerView.Adapter<ContentViewAdapter.
        }
     }
 
+    public Boolean checkItemSelected(String targetUri) {
+        for (int i = 0; i < selectedPhotosUri.size(); i++) {
+            if (targetUri.equals(selectedPhotosUri.get(i))) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    public Boolean checkItemVideo(String targetID) {
+        for (int i = 0; i < selectedItemsVideo.size(); i++) {
+            if (targetID.equals(selectedItemsVideo.get(i))) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     @Override
     public int getItemCount() {
         if (assetType == AssetType.IMAGE) {
@@ -113,6 +142,16 @@ public class ContentViewAdapter extends RecyclerView.Adapter<ContentViewAdapter.
         } else {
             return itemsVideo.size();
         }
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return position;
+    }
+
+    @Override
+    public int getItemViewType(int position) {
+        return position;
     }
 
     public static class ItemHolder extends RecyclerView.ViewHolder {
@@ -132,22 +171,30 @@ public class ContentViewAdapter extends RecyclerView.Adapter<ContentViewAdapter.
 
     }
 
-    public void add(int location, Uri iUri) {
+    public void add(int location, String iUri) {
         itemsUri.add(location, iUri);
         notifyItemInserted(location);
     }
 
-    public void addVideo(int location, Long videoID) {
+    public void addVideo(int location, String videoID) {
         itemsVideo.add(itemsVideo.size(), videoID);
         notifyItemInserted(location);
     }
 
-    public void setSelectedPhotos(List<Uri> iUris) {
+    public void setCheckBoxPhotosSelection(ArrayList<String> iUris) {
+        selectedPhotosUri = iUris;
+    }
+
+    public void setCheckBoxVideosSelection(ArrayList<String> videoIDs) {
+        selectedItemsVideo = videoIDs;
+    }
+
+    public void setSelectedPhotos(ArrayList<String> iUris) {
         itemsUri = iUris;
         notifyDataSetChanged();
     }
 
-    public void setSelectedVideos(List<Long> videoIDs) {
+    public void setSelectedVideos(ArrayList<String> videoIDs) {
         itemsVideo = videoIDs;
         notifyDataSetChanged();
     }

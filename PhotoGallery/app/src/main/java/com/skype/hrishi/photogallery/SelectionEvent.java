@@ -2,6 +2,7 @@ package com.skype.hrishi.photogallery;
 
 import android.net.Uri;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -11,10 +12,10 @@ import java.util.List;
 public class SelectionEvent {
     private final int selectionCount;
     private final int assetType;
-    private final List<Uri> selectedPhotosUri;
-    private final List<Long> selectedItemsVideo;
+    private final ArrayList<String> selectedPhotosUri;
+    private final ArrayList<String> selectedItemsVideo;
 
-    public SelectionEvent(int selectionCount, int type, List<Uri> selectedPhotos, List<Long> selectedVideos) {
+    public SelectionEvent(int selectionCount, int type, ArrayList<String> selectedPhotos, ArrayList<String> selectedVideos) {
         this.selectionCount = selectionCount;
         this.assetType = type;
         this.selectedPhotosUri = selectedPhotos;
@@ -29,11 +30,11 @@ public class SelectionEvent {
         return assetType;
     }
 
-    public List<Uri> getSelectedPhotosUri() {
+    public ArrayList<String> getSelectedPhotosUri() {
         return selectedPhotosUri;
     }
 
-    public List<Long> getSelectedItemsVideo() {
+    public ArrayList<String> getSelectedItemsVideo() {
         return selectedItemsVideo;
     }
 }
