@@ -8,7 +8,6 @@
 
 #import "HPTableViewController.h"
 #import "HPAPI.h"
-#import "Communicator.h"
 
 @interface HPTableViewController ()
 
@@ -18,21 +17,13 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    /*
+    
     HPAPI *hpApi = [[HPAPI alloc] init];
-    [hpApi loadHPData:@"0" successBlock:^(HPData *hpData) {
+    [hpApi loadHPData:@"0" successBlock:^(NSArray<HPData *> *hpData) {
         NSLog(@"Success data %@", hpData);
     } withFailure:^(NSError *error) {
         NSLog(@"Error %@", error);
     }];
-*/
-    Communicator *c = [[Communicator alloc] init];
-    
-    c->host = @"https://hp-server-toy.herokuapp.com";
-    c->port = 80;
-    
-    [c setup];
-    //[c open];
     // Uncomment the following line to preserve selection between presentations.
     // self.clearsSelectionOnViewWillAppear = NO;
     

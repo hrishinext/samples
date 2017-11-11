@@ -9,8 +9,8 @@
 #import <Foundation/Foundation.h>
 #import "HPData.h"
 
-@interface HPAPI : NSObject <NSStreamDelegate>
+@interface HPAPI : NSObject <NSURLSessionDelegate, NSURLSessionTaskDelegate, NSURLSessionDataDelegate>
 
--(void)loadHPData:(NSString *)timestamp successBlock:(void (^)(HPData *))success withFailure:(void(^)(NSError *))failure;
+-(void)loadHPData:(NSString *)timestamp successBlock:(void (^)(NSArray <HPData *>*))success withFailure:(void(^)(NSError *))failure;
 
 @end
