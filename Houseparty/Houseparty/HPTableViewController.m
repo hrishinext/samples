@@ -8,6 +8,7 @@
 
 #import "HPTableViewController.h"
 #import "HPAPI.h"
+#import "HPDataProcol.h"
 
 @interface HPTableViewController ()
 
@@ -102,5 +103,9 @@
     // Pass the selected object to the new view controller.
 }
 */
+
+- (void) fetchNewData:(NSArray <HPData *>*) data {
+    
+}
 
 @end

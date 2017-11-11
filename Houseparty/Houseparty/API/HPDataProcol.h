@@ -12,6 +12,6 @@
 @protocol HPDataProcol <NSObject>
 
 @required
-- (void) fetchNewData:(NSArray <HPData *>) *data;
+- (void) fetchNewData:(NSArray <HPData *>*) data;
 
 @end
