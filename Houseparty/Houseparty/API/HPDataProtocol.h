@@ -9,7 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "HPData.h"
 
-@protocol HPDataProcol <NSObject>
+@protocol HPDataProtocol <NSObject>
 
 @required
 - (void) fetchNewData:(NSArray <HPData *>*) data;

@@ -46,7 +46,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		6C3A7A411FB70F0300331D97 /* HPDataProcol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HPDataProcol.h; path = ../../../../../../Hrishi/github/samples/Houseparty/Houseparty/API/HPDataProcol.h; sourceTree = "<group>"; };
+		6C3A7A411FB70F0300331D97 /* HPDataProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HPDataProtocol.h; path = ../../../../../../Hrishi/github/samples/Houseparty/Houseparty/API/HPDataProtocol.h; sourceTree = "<group>"; };
 		E4C803261FB6435200F3AE3E /* Houseparty.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Houseparty.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E4C803291FB6435200F3AE3E /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		E4C8032A1FB6435200F3AE3E /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -173,7 +173,7 @@
 		E4C8035C1FB6436000F3AE3E /* API */ = {
 			isa = PBXGroup;
 			children = (
-				6C3A7A411FB70F0300331D97 /* HPDataProcol.h */,
+				6C3A7A411FB70F0300331D97 /* HPDataProtocol.h */,
 				E4C8035D1FB6438300F3AE3E /* HPAPI.h */,
 				E4C8035E1FB6438300F3AE3E /* HPAPI.m */,
 			);

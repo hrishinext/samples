@@ -89,6 +89,32 @@
     NSString* newStr = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
     NSArray *brokenByLines=[newStr componentsSeparatedByString:@"\n"];
     NSLog(@"new oo %@", brokenByLines);
+    [self.delegate fetchNewData:[self buildHPDataListFromArray:brokenByLines]];
+}
+
+- (NSArray<HPData *>*) buildHPDataListFromArray:(NSArray *) inputArray {
+    NSMutableArray<HPData *> *outputArray = [[NSMutableArray alloc] init];
+    for (int i = 0; i < [inputArray count]; i++) {
+        NSData *data = [inputArray[i] dataUsingEncoding:NSUTF8StringEncoding];
+        id responseDict = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+        //NSDictionary *responseDict = inputArray[i];
+        HPData *hpData = [[HPData alloc] init];
+        HPFrom *hpFrom = [[HPFrom alloc] init];
+        NSDictionary *fromHP = [responseDict objectForKey:@"from"];
+        hpFrom.fromId = [fromHP objectForKey:@"id"];
+        hpFrom.name = [fromHP objectForKey:@"name"];
+        
+        HPTo *hpTo = [[HPTo alloc] init];
+        NSDictionary *toHP = [responseDict objectForKey:@"to"];
+        hpTo.toId  = [toHP objectForKey:@"id"];
+        hpTo.name = [toHP objectForKey:@"name"];
+        
+        BOOL boolValue = [[responseDict objectForKey:@"areFriends"] boolValue];
+        hpData.areFriends = &(boolValue);
+        hpData.timestamp = [responseDict objectForKey:@"timestamp"];
+        [outputArray addObject:hpData];
+    }
+    return [outputArray copy];
 }
 
 - (void)URLSession:(NSURLSession *)session dataTask:(NSURLSessionDataTask *)dataTask
@@ -102,5 +128,6 @@
 didCompleteWithError:(NSError *)error{
     NSLog(@"%s",__func__);
 }
+
 
 @end

@@ -8,7 +8,7 @@
 
 #import "HPTableViewController.h"
 #import "HPAPI.h"
-#import "HPDataProcol.h"
+#import "HPDataProtocol.h"
 
 @interface HPTableViewController ()
 
@@ -20,6 +20,7 @@
     [super viewDidLoad];
     
     HPAPI *hpApi = [[HPAPI alloc] init];
+    hpApi.delegate = self;
     [hpApi loadHPData:@"0" successBlock:^(NSArray<HPData *> *hpData) {
         NSLog(@"Success data %@", hpData);
     } withFailure:^(NSError *error) {
@@ -105,7 +106,7 @@
 */
 
 - (void) fetchNewData:(NSArray <HPData *>*) data {
-    
+    NSLog(@"data %@", data);
 }
 
 @end
