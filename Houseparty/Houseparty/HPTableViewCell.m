@@ -6,9 +6,9 @@
 //  Copyright © 2017 Hrishi Amravatkar. All rights reserved.
 //
 
-#import "HPCellTableViewCell.h"
+#import "HPTableViewCell.h"
 
-@implementation HPCellTableViewCell
+@implementation HPTableViewCell
 
 - (void)awakeFromNib {
     [super awakeFromNib];

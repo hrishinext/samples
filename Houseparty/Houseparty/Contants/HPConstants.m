@@ -10,6 +10,6 @@
 
 @implementation HPConstants
 
-NSString *const BASE_URI = @"https://hp-server-toy.herokuapp.com";
+NSString *const BASE_URI = @"https://hp-server-toy.herokuapp.com/?since=";
 
 @end

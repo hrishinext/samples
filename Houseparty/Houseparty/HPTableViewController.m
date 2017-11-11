@@ -9,6 +9,8 @@
 #import "HPTableViewController.h"
 #import "HPAPI.h"
 #import "HPDataProtocol.h"
+#import "HPTableViewCell.h"
+#import "NSArray+hpFilters.h"
 
 @interface HPTableViewController ()
 
@@ -20,6 +22,11 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.navigationController.topViewController.title = @"HouseParty";
+    UISwitch *areFriendsSwitch = [[UISwitch alloc] init];
+    [areFriendsSwitch addTarget:self action:@selector(action:) forControlEvents:UIControlEventValueChanged];
+    UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithCustomView:areFriendsSwitch];
+    self.navigationController.topViewController.navigationItem.rightBarButtonItem = item;
     self.dataList = [[NSMutableArray alloc] init];
     HPAPI *hpApi = [[HPAPI alloc] init];
     hpApi.delegate = self;
@@ -46,60 +53,34 @@
 }
 
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
+    static NSString *simpleTableIdentifier = @"Cell";
+    
+    HPTableViewCell *cell = (HPTableViewCell *)[tableView dequeueReusableCellWithIdentifier:simpleTableIdentifier forIndexPath:indexPath];
+    if (cell == nil) {
+        cell = [[HPTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:simpleTableIdentifier];
+    }
     HPData *hpData = self.dataList[indexPath.row];
-    cell.textLabel.text = hpData.timestamp;
-    cell.detailTextLabel.text = 
+    cell.fromId.text = hpData.from.fromId;
+    cell.fromName.text = hpData.from.name;
+    cell.toId.text = hpData.to.toId;
+    cell.toName.text = hpData.to.name;
+    NSString *areFriendsValue = hpData.areFriends ? @"true" : @"false";
+    cell.areFriends.text = areFriendsValue;
+    NSNumber *doubleNumber = [NSNumber numberWithDouble:hpData.timestamp];
+    cell.timestamp.text = [doubleNumber stringValue];
     return cell;
 }
 
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
-}
-*/
-
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
-}
-*/
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
-
-- (void) fetchNewData:(NSArray <HPData *>*) data {
+- (void)fetchNewData:(NSArray <HPData *>*) data {
     NSLog(@"data %@", data);
     [self.dataList addObjectsFromArray:data];
+    self.dataList = [self.dataList getSortedArray];
+    [self.tableView reloadData];
+}
+
+- (void) action:(UISwitch *)sender {
+    BOOL value = sender.on;
+    self.dataList = [self.dataList filterByAreFriends:value];
     [self.tableView reloadData];
 }
 
