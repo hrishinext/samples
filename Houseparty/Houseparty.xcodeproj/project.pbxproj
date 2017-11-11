@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		6CC20D6D1FB7237E00AC87B3 /* HPCellTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CC20D6C1FB7237E00AC87B3 /* HPCellTableViewCell.m */; };
 		E4C8032B1FB6435200F3AE3E /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E4C8032A1FB6435200F3AE3E /* AppDelegate.m */; };
 		E4C803311FB6435200F3AE3E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E4C8032F1FB6435200F3AE3E /* Main.storyboard */; };
 		E4C803331FB6435200F3AE3E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E4C803321FB6435200F3AE3E /* Assets.xcassets */; };
@@ -47,6 +48,8 @@
 
 /* Begin PBXFileReference section */
 		6C3A7A411FB70F0300331D97 /* HPDataProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = HPDataProtocol.h; path = ../../../../../../Hrishi/github/samples/Houseparty/Houseparty/API/HPDataProtocol.h; sourceTree = "<group>"; };
+		6CC20D6B1FB7237E00AC87B3 /* HPCellTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HPCellTableViewCell.h; sourceTree = "<group>"; };
+		6CC20D6C1FB7237E00AC87B3 /* HPCellTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HPCellTableViewCell.m; sourceTree = "<group>"; };
 		E4C803261FB6435200F3AE3E /* Houseparty.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Houseparty.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E4C803291FB6435200F3AE3E /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		E4C8032A1FB6435200F3AE3E /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -128,6 +131,8 @@
 				E4C8035B1FB6435A00F3AE3E /* Model */,
 				E4C803291FB6435200F3AE3E /* AppDelegate.h */,
 				E4C8032A1FB6435200F3AE3E /* AppDelegate.m */,
+				6CC20D6B1FB7237E00AC87B3 /* HPCellTableViewCell.h */,
+				6CC20D6C1FB7237E00AC87B3 /* HPCellTableViewCell.m */,
 				E4C803721FB6496700F3AE3E /* HPTableViewController.h */,
 				E4C803731FB6496700F3AE3E /* HPTableViewController.m */,
 				E4C8032F1FB6435200F3AE3E /* Main.storyboard */,
@@ -322,6 +327,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6CC20D6D1FB7237E00AC87B3 /* HPCellTableViewCell.m in Sources */,
 				E4C8035F1FB6438300F3AE3E /* HPAPI.m in Sources */,
 				E4C803741FB6496700F3AE3E /* HPTableViewController.m in Sources */,
 				E4C803391FB6435200F3AE3E /* main.m in Sources */,

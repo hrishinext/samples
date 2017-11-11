@@ -12,13 +12,15 @@
 
 @interface HPTableViewController ()
 
+@property(nonatomic, readwrite) NSMutableArray<HPData *> *dataList;
+
 @end
 
 @implementation HPTableViewController
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
+    self.dataList = [[NSMutableArray alloc] init];
     HPAPI *hpApi = [[HPAPI alloc] init];
     hpApi.delegate = self;
     [hpApi loadHPData:@"0" successBlock:^(NSArray<HPData *> *hpData) {
@@ -26,12 +28,6 @@
     } withFailure:^(NSError *error) {
         NSLog(@"Error %@", error);
     }];
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
-    
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
-    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -42,24 +38,20 @@
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-#warning Incomplete implementation, return the number of sections
-    return 0;
+    return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-#warning Incomplete implementation, return the number of rows
-    return 0;
+    return [self.dataList count];
 }
 
-/*
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:<#@"reuseIdentifier"#> forIndexPath:indexPath];
-    
-    // Configure the cell...
-    
+    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:@"Cell" forIndexPath:indexPath];
+    HPData *hpData = self.dataList[indexPath.row];
+    cell.textLabel.text = hpData.timestamp;
+    cell.detailTextLabel.text = 
     return cell;
 }
-*/
 
 /*
 // Override to support conditional editing of the table view.
@@ -107,6 +99,8 @@
 
 - (void) fetchNewData:(NSArray <HPData *>*) data {
     NSLog(@"data %@", data);
+    [self.dataList addObjectsFromArray:data];
+    [self.tableView reloadData];
 }
 
 @end
