@@ -7,8 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "HPDataProtocol.h"
 
-@interface HPTableViewController : UITableViewController <HPDataProtocol>
+@interface HPTableViewController : UITableViewController
 
 @end

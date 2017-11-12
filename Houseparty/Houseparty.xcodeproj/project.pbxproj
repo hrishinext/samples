@@ -7,8 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		6CC20D6D1FB7237E00AC87B3 /* HPTableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = 6CC20D6C1FB7237E00AC87B3 /* HPTableViewCell.m */; };
-		E41E14251FB79509005B4478 /* NSArray+hpFilters.m in Sources */ = {isa = PBXBuildFile; fileRef = E41E14241FB79509005B4478 /* NSArray+hpFilters.m */; };
 		E4C8032B1FB6435200F3AE3E /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = E4C8032A1FB6435200F3AE3E /* AppDelegate.m */; };
 		E4C803311FB6435200F3AE3E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E4C8032F1FB6435200F3AE3E /* Main.storyboard */; };
 		E4C803331FB6435200F3AE3E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E4C803321FB6435200F3AE3E /* Assets.xcassets */; };
@@ -48,11 +46,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		6CC20D6B1FB7237E00AC87B3 /* HPTableViewCell.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = HPTableViewCell.h; sourceTree = "<group>"; };
-		6CC20D6C1FB7237E00AC87B3 /* HPTableViewCell.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = HPTableViewCell.m; sourceTree = "<group>"; };
-		E41E14211FB76D7A005B4478 /* HPDataProtocol.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = HPDataProtocol.h; sourceTree = "<group>"; };
-		E41E14231FB79509005B4478 /* NSArray+hpFilters.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "NSArray+hpFilters.h"; sourceTree = "<group>"; };
-		E41E14241FB79509005B4478 /* NSArray+hpFilters.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = "NSArray+hpFilters.m"; sourceTree = "<group>"; };
 		E4C803261FB6435200F3AE3E /* Houseparty.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Houseparty.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E4C803291FB6435200F3AE3E /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
 		E4C8032A1FB6435200F3AE3E /* AppDelegate.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = AppDelegate.m; sourceTree = "<group>"; };
@@ -106,15 +99,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		E41E14221FB79498005B4478 /* Categories */ = {
-			isa = PBXGroup;
-			children = (
-				E41E14231FB79509005B4478 /* NSArray+hpFilters.h */,
-				E41E14241FB79509005B4478 /* NSArray+hpFilters.m */,
-			);
-			path = Categories;
-			sourceTree = "<group>";
-		};
 		E4C8031D1FB6435200F3AE3E = {
 			isa = PBXGroup;
 			children = (
@@ -138,14 +122,11 @@
 		E4C803281FB6435200F3AE3E /* Houseparty */ = {
 			isa = PBXGroup;
 			children = (
-				E41E14221FB79498005B4478 /* Categories */,
 				E4C803611FB643F200F3AE3E /* Contants */,
 				E4C8035C1FB6436000F3AE3E /* API */,
 				E4C8035B1FB6435A00F3AE3E /* Model */,
 				E4C803291FB6435200F3AE3E /* AppDelegate.h */,
 				E4C8032A1FB6435200F3AE3E /* AppDelegate.m */,
-				6CC20D6B1FB7237E00AC87B3 /* HPTableViewCell.h */,
-				6CC20D6C1FB7237E00AC87B3 /* HPTableViewCell.m */,
 				E4C803721FB6496700F3AE3E /* HPTableViewController.h */,
 				E4C803731FB6496700F3AE3E /* HPTableViewController.m */,
 				E4C8032F1FB6435200F3AE3E /* Main.storyboard */,
@@ -191,7 +172,6 @@
 		E4C8035C1FB6436000F3AE3E /* API */ = {
 			isa = PBXGroup;
 			children = (
-				E41E14211FB76D7A005B4478 /* HPDataProtocol.h */,
 				E4C8035D1FB6438300F3AE3E /* HPAPI.h */,
 				E4C8035E1FB6438300F3AE3E /* HPAPI.m */,
 			);
@@ -340,7 +320,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				6CC20D6D1FB7237E00AC87B3 /* HPTableViewCell.m in Sources */,
 				E4C8035F1FB6438300F3AE3E /* HPAPI.m in Sources */,
 				E4C803741FB6496700F3AE3E /* HPTableViewController.m in Sources */,
 				E4C803391FB6435200F3AE3E /* main.m in Sources */,
@@ -348,7 +327,6 @@
 				E4C803701FB6483900F3AE3E /* HPTo.m in Sources */,
 				E4C8032B1FB6435200F3AE3E /* AppDelegate.m in Sources */,
 				E4C8036C1FB6483000F3AE3E /* HPFrom.m in Sources */,
-				E41E14251FB79509005B4478 /* NSArray+hpFilters.m in Sources */,
 				E4C803641FB6440700F3AE3E /* HPConstants.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

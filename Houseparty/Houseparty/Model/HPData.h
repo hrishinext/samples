@@ -14,8 +14,8 @@
 
 @property(nonatomic, readwrite) HPFrom *from;
 @property(nonatomic, readwrite) HPTo *to;
-@property(nonatomic, readwrite) BOOL areFriends;
-@property(nonatomic, readwrite) double timestamp;
+@property(nonatomic, readwrite) BOOL *areFriends;
+@property(nonatomic, readwrite) NSString *timestamp;
 
 
 @end
