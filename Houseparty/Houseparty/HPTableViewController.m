@@ -38,7 +38,7 @@
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
+    [self.dataList removeAllObjects];
 }
 
 #pragma mark - Table view data source
