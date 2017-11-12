@@ -8,9 +8,12 @@
 
 #import <Foundation/Foundation.h>
 #import "HPData.h"
+#import "HPDataProtocol.h"
 
-@interface HPAPI : NSObject
+@interface HPAPI : NSObject <NSURLSessionDelegate, NSURLSessionTaskDelegate, NSURLSessionDataDelegate>
 
--(void)loadHPData:(NSString *)timestamp successBlock:(void (^)(HPData *))success withFailure:(void(^)(NSError *))failure;
+@property(nonatomic, weak) id<HPDataProtocol> delegate;
+
+-(void)loadHPData;
 
 @end

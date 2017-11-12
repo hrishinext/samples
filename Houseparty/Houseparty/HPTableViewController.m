@@ -8,8 +8,14 @@
 
 #import "HPTableViewController.h"
 #import "HPAPI.h"
+#import "HPDataProtocol.h"
+#import "HPTableViewCell.h"
+#import "NSArray+hpFilters.h"
 
 @interface HPTableViewController ()
+
+@property(nonatomic, readwrite) NSMutableArray<HPData *> *dataList;
+@property(nonatomic) BOOL areFriendsBool;
 
 @end
 
@@ -18,18 +24,16 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     
+    self.navigationController.topViewController.title = @"HouseParty";
+    UISwitch *areFriendsSwitch = [[UISwitch alloc] init];
+    _areFriendsBool = NO;
+    [areFriendsSwitch addTarget:self action:@selector(action:) forControlEvents:UIControlEventValueChanged];
+    UIBarButtonItem *item = [[UIBarButtonItem alloc] initWithCustomView:areFriendsSwitch];
+    self.navigationController.topViewController.navigationItem.rightBarButtonItem = item;
+    self.dataList = [[NSMutableArray alloc] init];
     HPAPI *hpApi = [[HPAPI alloc] init];
-    [hpApi loadHPData:@"0" successBlock:^(HPData *hpData) {
-        NSLog(@"Success data %@", hpData);
-    } withFailure:^(NSError *error) {
-        NSLog(@"Error %@", error);
-    }];
-    // Uncomment the following line to preserve selection between presentations.
-    // self.clearsSelectionOnViewWillAppear = NO;
-    
-    // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-    // self.navigationItem.rightBarButtonItem = self.editButtonItem;
-    
+    hpApi.delegate = self;
+    [hpApi loadHPData];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -40,67 +44,47 @@
 #pragma mark - Table view data source
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
-#warning Incomplete implementation, return the number of sections
-    return 0;
+    return 1;
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
-#warning Incomplete implementation, return the number of rows
-    return 0;
+    return [self.dataList count];
 }
 
-/*
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
-    UITableViewCell *cell = [tableView dequeueReusableCellWithIdentifier:<#@"reuseIdentifier"#> forIndexPath:indexPath];
+    static NSString *simpleTableIdentifier = @"Cell";
     
-    // Configure the cell...
-    
+    HPTableViewCell *cell = (HPTableViewCell *)[tableView dequeueReusableCellWithIdentifier:simpleTableIdentifier forIndexPath:indexPath];
+    if (cell == nil) {
+        cell = [[HPTableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:simpleTableIdentifier];
+    }
+    HPData *hpData = self.dataList[indexPath.row];
+    cell.fromId.text = hpData.from.fromId;
+    cell.fromName.text = hpData.from.name;
+    cell.toId.text = hpData.to.toId;
+    cell.toName.text = hpData.to.name;
+    NSString *areFriendsValue = hpData.areFriends ? @"true" : @"false";
+    cell.areFriends.text = areFriendsValue;
+    NSNumber *doubleNumber = [NSNumber numberWithDouble:hpData.timestamp];
+    cell.timestamp.text = [doubleNumber stringValue];
     return cell;
 }
-*/
 
-/*
-// Override to support conditional editing of the table view.
-- (BOOL)tableView:(UITableView *)tableView canEditRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the specified item to be editable.
-    return YES;
+- (void)fetchNewData:(NSArray <HPData *>*) data {
+
+    [self.dataList addObjectsFromArray:data];
+    self.dataList = [self.dataList getSortedArray];
+    if (_areFriendsBool) {
+        self.dataList = [self.dataList filterByAreFriendsTrue];
+    }
+    [self.tableView reloadData];
 }
-*/
 
-/*
-// Override to support editing the table view.
-- (void)tableView:(UITableView *)tableView commitEditingStyle:(UITableViewCellEditingStyle)editingStyle forRowAtIndexPath:(NSIndexPath *)indexPath {
-    if (editingStyle == UITableViewCellEditingStyleDelete) {
-        // Delete the row from the data source
-        [tableView deleteRowsAtIndexPaths:@[indexPath] withRowAnimation:UITableViewRowAnimationFade];
-    } else if (editingStyle == UITableViewCellEditingStyleInsert) {
-        // Create a new instance of the appropriate class, insert it into the array, and add a new row to the table view
-    }   
+- (void) action:(UISwitch *)sender {
+    BOOL value = sender.on;
+    _areFriendsBool = value;
+    self.dataList = [self.dataList filterByAreFriendsTrue];
+    [self.tableView reloadData];
 }
-*/
-
-/*
-// Override to support rearranging the table view.
-- (void)tableView:(UITableView *)tableView moveRowAtIndexPath:(NSIndexPath *)fromIndexPath toIndexPath:(NSIndexPath *)toIndexPath {
-}
-*/
-
-/*
-// Override to support conditional rearranging of the table view.
-- (BOOL)tableView:(UITableView *)tableView canMoveRowAtIndexPath:(NSIndexPath *)indexPath {
-    // Return NO if you do not want the item to be re-orderable.
-    return YES;
-}
-*/
-
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
-}
-*/
 
 @end

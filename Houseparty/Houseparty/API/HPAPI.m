@@ -10,53 +10,89 @@
 #import "HPData.h"
 #import "HPConstants.h"
 
+@interface HPAPI ()
+@property (nonatomic,strong) NSURLSession *session;
+@property (nonatomic) double currentTimestamp;
+@end
+
 @implementation HPAPI
 
--(void)loadHPData:(NSString *)timestamp successBlock:(void (^)(HPData *))success withFailure:(void(^)(NSError *))failure {
-    NSInputStream *inputStream = [NSString stringWithContentsOfURL:BASE_URI]; //An inputStream i got from http request
-    uint8_t buffer[1024];
-    int len;
-    NSMutableString *total = [[NSMutableString alloc] init];
-    while ([inputStream hasBytesAvailable]) {
-        len = [inputStream read:buffer maxLength:sizeof(buffer)];
-        if (len > 0) {
-            [total appendString: [[NSString alloc] initWithBytes:buffer length:len encoding:NSASCIIStringEncoding]];
-        }
+-(void)loadHPData {
+    self.session = [self createSession];
+    if (_currentTimestamp == 0) {
+        long currentTime = (long)(NSTimeInterval)([[NSDate date] timeIntervalSince1970]);
+        _currentTimestamp = currentTime;
     }
-    
-    HPData *hpData = [[HPData alloc] init];
-    success(hpData);
-    
-    /*
-    NSMutableURLRequest *request = [[NSMutableURLRequest alloc] init];
-    NSString *urlString = [NSString stringWithFormat:@"%@%@", BASE_URI, [NSString stringWithFormat:@"%@", timestamp]];
-    NSLog(@"URL %@", urlString);
-    [request setURL:[NSURL URLWithString:urlString]];
-    [request setHTTPMethod:@"GET"];
-    
-    NSURLSession *session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]];
-    [[session dataTaskWithRequest:request completionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {
-        if(error == nil) {
-            NSDictionary *responseDict = [NSJSONSerialization JSONObjectWithData:data options:0 error:&error];
+    NSNumber *doubleNumber = [NSNumber numberWithDouble:_currentTimestamp];
+    NSString *currentTimestampString = [doubleNumber stringValue];
+    NSURL *dataURL = [NSURL URLWithString:[NSString stringWithFormat:@"%@%@", BASE_URI, currentTimestampString]];
+    NSURLRequest *request = [NSURLRequest requestWithURL:dataURL];
+    NSURLSessionDataTask *finderTask = [self.session dataTaskWithRequest:request];
+    [finderTask resume];
+}
+
+#pragma mark Find Using NSURLSession Delegate Approach
+- (NSURLSession *)createSession
+{
+    static NSURLSession *session = nil;
+    session = [NSURLSession sessionWithConfiguration:[NSURLSessionConfiguration defaultSessionConfiguration]
+                                            delegate:self
+                                       delegateQueue:[NSOperationQueue mainQueue]];
+    return session;
+}
+
+//The below method used the delegate approach to get data from the same web service
+
+- (void)URLSession:(NSURLSession *)session
+          dataTask:(NSURLSessionDataTask *)dataTask
+    didReceiveData:(NSData *)data{
+    NSString* newStr = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+    NSArray *brokenByLines=[newStr componentsSeparatedByString:@"\n"];
+    [self.delegate fetchNewData:[self buildHPDataListFromArray:brokenByLines]];
+}
+
+- (NSArray<HPData *>*) buildHPDataListFromArray:(NSArray *) inputArray {
+    NSMutableArray<HPData *> *outputArray = [[NSMutableArray alloc] init];
+    for (int i = (int)[inputArray count] - 1; i>=0; i--) {
+        NSData *data = [inputArray[i] dataUsingEncoding:NSUTF8StringEncoding];
+        id responseDict = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+        if (responseDict != nil) {
             HPData *hpData = [[HPData alloc] init];
             HPFrom *hpFrom = [[HPFrom alloc] init];
             NSDictionary *fromHP = [responseDict objectForKey:@"from"];
             hpFrom.fromId = [fromHP objectForKey:@"id"];
             hpFrom.name = [fromHP objectForKey:@"name"];
-            
             HPTo *hpTo = [[HPTo alloc] init];
             NSDictionary *toHP = [responseDict objectForKey:@"to"];
             hpTo.toId  = [toHP objectForKey:@"id"];
             hpTo.name = [toHP objectForKey:@"name"];
-            
             BOOL boolValue = [[responseDict objectForKey:@"areFriends"] boolValue];
+            hpData.from = hpFrom;
+            hpData.to = hpTo;
             hpData.areFriends = &(boolValue);
-            hpData.timestamp = [responseDict objectForKey:@"timestamp"];
-            success(hpData);
-        } else {
-            failure(error);
+            NSString *timeString = [responseDict objectForKey:@"timestamp"];
+            hpData.timestamp = [timeString doubleValue];
+            [outputArray addObject:hpData];
         }
-    }] resume];*/
+        if (i == 0) {
+            NSString *lastTimestamp = [responseDict objectForKey:@"timestamp"];
+            _currentTimestamp = [lastTimestamp longLongValue];
+        }
+    }
+    return [outputArray copy];
 }
+
+- (void)URLSession:(NSURLSession *)session dataTask:(NSURLSessionDataTask *)dataTask
+ willCacheResponse:(NSCachedURLResponse *)proposedResponse
+ completionHandler:(void (^)(NSCachedURLResponse *cachedResponse))completionHandler{
+    NSLog(@"%s",__func__);
+}
+
+- (void)URLSession:(NSURLSession *)session
+              task:(NSURLSessionTask *)task
+didCompleteWithError:(NSError *)error{
+    NSLog(@"%s",__func__);
+}
+
 
 @end
