@@ -41,8 +41,6 @@
     return session;
 }
 
-//The below method used the delegate approach to get data from the same web service
-
 - (void)URLSession:(NSURLSession *)session
           dataTask:(NSURLSessionDataTask *)dataTask
     didReceiveData:(NSData *)data{
