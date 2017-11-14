@@ -58,6 +58,8 @@
 		6C4C9F171FB9155A0064FA31 /* Meraki */ = {
 			isa = PBXGroup;
 			children = (
+				6C4C9F2F1FB916970064FA31 /* API */,
+				6C4C9F2E1FB916870064FA31 /* Model */,
 				6C4C9F181FB9155A0064FA31 /* AppDelegate.h */,
 				6C4C9F191FB9155A0064FA31 /* AppDelegate.m */,
 				6C4C9F1B1FB9155A0064FA31 /* ViewController.h */,
@@ -69,6 +71,20 @@
 				6C4C9F271FB9155A0064FA31 /* main.m */,
 			);
 			path = Meraki;
+			sourceTree = "<group>";
+		};
+		6C4C9F2E1FB916870064FA31 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		6C4C9F2F1FB916970064FA31 /* API */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = API;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
