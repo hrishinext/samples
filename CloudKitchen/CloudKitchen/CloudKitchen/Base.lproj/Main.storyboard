@@ -142,6 +142,7 @@
                     </view>
                     <navigationItem key="navigationItem" title="Cloud Kitchen" id="K5x-XY-mTy"/>
                     <connections>
+                        <outlet property="orderStatusLabel" destination="iT3-U6-cod" id="Whl-SP-rLK"/>
                         <outlet property="ordersTableView" destination="dFy-co-9Mz" id="8AU-pY-L66"/>
                     </connections>
                 </viewController>

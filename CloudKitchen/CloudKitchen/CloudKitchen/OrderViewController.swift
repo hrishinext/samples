@@ -19,7 +19,7 @@ class OrderViewController: UIViewController {
     var overflowShelf: [Order] = []
     var timer: Timer?
     var currentOrderCount: Int = 0
-    //var courier
+    @IBOutlet var orderStatusLabel: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -40,6 +40,7 @@ class OrderViewController: UIViewController {
         }) { (error) in
             print(error)
         }
+        
     }
     
     @objc func fireTimer() {
@@ -53,10 +54,14 @@ class OrderViewController: UIViewController {
             currentOrders.append(self.orders[self.currentOrderCount])
             self.currentOrderCount += 1
             self.processIncomingOrders(currentOrders)
-            
-            var randomCourierTime = Int.random(in: 2 ... 6)
-            DispatchQueue.main.asyncAfter(deadline: .now() + randomCourierTime) {
-                //courier arrives and takes the orde
+            self.orderStatusLabel.text = "Courier Dispatched!"
+            let randomCourierTime = Int.random(in: 2 ... 6)
+            DispatchQueue.main.asyncAfter(deadline: .now() + Double(randomCourierTime)) {
+                //courier arrives and takes the order
+                self.orderStatusLabel.text = "Courier pickedup order!"
+                //pickup order
+                self.pickupOrder()
+                
             }
         }
     }
@@ -64,21 +69,50 @@ class OrderViewController: UIViewController {
     func processIncomingOrders(_ incomingOrders: [Order]) {
         //process the order in different groups
         for order in incomingOrders {
-            if order.temp == "hot" {
+            if order.shelfType == .hotShelf && self.hotShelf.count <= 10 {
                 self.hotShelf.append(order)
             }
-            if order.temp == "cold" {
+            else if order.shelfType == .coldShelf && self.hotShelf.count <= 10 {
                 self.coldShelf.append(order)
             }
-            if order.temp == "frozen" {
+            else if order.shelfType == .frozenShelf && self.hotShelf.count <= 10 {
                 self.frozenShelf.append(order)
             }
+            else if self.overflowShelf.count <= 15 {
+                self.overflowShelf.append(order)
+            }
+            else {
+                //remove random order from overflowShelf
+                let randomOrder = Int.random(in: 0 ... 15)
+                self.overflowShelf.remove(at: randomOrder)
+                self.overflowShelf.append(order)
+            }
+
         }
         DispatchQueue.main.async {
             self.ordersTableView.reloadData()
         }
     }
     
+    func pickupOrder() {
+        if self.hotShelf.count > 0 {
+            self.hotShelf.remove(at: 0)
+        }
+        else if self.coldShelf.count > 0 {
+            self.coldShelf.remove(at: 0)
+        }
+        else if self.frozenShelf.count > 10 {
+            self.frozenShelf.remove(at: 0)
+        }
+        else if self.overflowShelf.count > 0 {
+            self.overflowShelf.remove(at: 0)
+        } else {
+            //all orders empty and no orders left.
+            print("all orders successfully delivered")
+        }
+        
+        self.ordersTableView.reloadData()
+    }
 
     /*
     // MARK: - Navigation

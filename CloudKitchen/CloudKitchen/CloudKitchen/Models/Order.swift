@@ -14,6 +14,7 @@ struct Order {
     var temp: String
     var shelfLife: Int
     var decayRate: Double
+    var shelfType: ShelfType
     
     init(_ inputDictionary: [String: AnyObject]) {
         self.orderId = inputDictionary["id"] as! String
@@ -21,5 +22,6 @@ struct Order {
         self.temp = inputDictionary["temp"] as! String
         self.shelfLife = inputDictionary["shelfLife"] as! Int
         self.decayRate = inputDictionary["decayRate"] as! Double
+        self.shelfType = ShelfType(rawValue: self.temp)!
     }
 }
