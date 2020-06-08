@@ -102,35 +102,35 @@
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9MW-up-REf">
-                                <rect key="frame" x="132" y="224" width="166" height="21"/>
+                                <rect key="frame" x="132" y="224" width="251" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mhd-EB-HLk">
-                                <rect key="frame" x="83" y="245" width="166" height="21"/>
+                                <rect key="frame" x="83" y="245" width="300" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mCY-DW-cJH">
-                                <rect key="frame" x="109" y="265" width="166" height="21"/>
+                                <rect key="frame" x="109" y="265" width="274" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="y3G-qB-Aap">
-                                <rect key="frame" x="125" y="283" width="166" height="21"/>
+                                <rect key="frame" x="125" y="283" width="258" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Current Order Served" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iT3-U6-cod">
-                                <rect key="frame" x="125" y="134" width="165" height="21"/>
+                                <rect key="frame" x="20" y="134" width="394" height="21"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <nil key="textColor"/>
@@ -142,8 +142,13 @@
                     </view>
                     <navigationItem key="navigationItem" title="Cloud Kitchen" id="K5x-XY-mTy"/>
                     <connections>
+                        <outlet property="decayLabel" destination="y3G-qB-Aap" id="rfc-gX-CQT"/>
+                        <outlet property="orderIdLabel" destination="N3X-73-hf9" id="Cvt-vD-Dwy"/>
+                        <outlet property="orderName" destination="9MW-up-REf" id="AhD-dR-aLl"/>
                         <outlet property="orderStatusLabel" destination="iT3-U6-cod" id="Whl-SP-rLK"/>
                         <outlet property="ordersTableView" destination="dFy-co-9Mz" id="8AU-pY-L66"/>
+                        <outlet property="shelfLabel" destination="mCY-DW-cJH" id="4sB-WK-E3v"/>
+                        <outlet property="tempLabel" destination="mhd-EB-HLk" id="lGO-Ja-eeD"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="iix-fS-MkD" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>

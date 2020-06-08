@@ -10,20 +10,20 @@ import Foundation
 
 public enum ShelfType: String {
     
-    case hotShelf
-    case coldShelf
-    case frozenShelf
-    case overflowShelf
+    case hot
+    case cold
+    case frozen
+    case overflow
     
     var shelfTitle: String {
         switch  self {
-        case .hotShelf:
+        case .hot:
             return "Hot Shelf"
-        case .coldShelf:
+        case .cold:
             return "Cold Shelf"
-        case .frozenShelf:
+        case .frozen:
             return "Frozen Shelf"
-        case .overflowShelf:
+        case .overflow:
             return "Overflow Shelf"
         }
     }

@@ -18,8 +18,14 @@ class OrderViewController: UIViewController {
     var frozenShelf: [Order] = []
     var overflowShelf: [Order] = []
     var timer: Timer?
+    var courierTimer: Timer?
     var currentOrderCount: Int = 0
     @IBOutlet var orderStatusLabel: UILabel!
+    @IBOutlet weak var orderIdLabel: UILabel!
+    @IBOutlet weak var orderName: UILabel!
+    @IBOutlet weak var tempLabel: UILabel!
+    @IBOutlet weak var shelfLabel: UILabel!
+    @IBOutlet weak var decayLabel: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -41,6 +47,16 @@ class OrderViewController: UIViewController {
             print(error)
         }
         
+        self.courierTimer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true, block: { (timer) in
+            let randomCourierTime = Int.random(in: 2 ... 6)
+            DispatchQueue.main.asyncAfter(deadline: .now() + Double(randomCourierTime)) {
+                //courier arrives and takes the order
+                self.orderStatusLabel.text = "Courier pickedup order!"
+                //pickup order
+                self.pickupOrder(timer)
+            }
+        })
+        
     }
     
     @objc func fireTimer() {
@@ -55,35 +71,27 @@ class OrderViewController: UIViewController {
             self.currentOrderCount += 1
             self.processIncomingOrders(currentOrders)
             self.orderStatusLabel.text = "Courier Dispatched!"
-            let randomCourierTime = Int.random(in: 2 ... 6)
-            DispatchQueue.main.asyncAfter(deadline: .now() + Double(randomCourierTime)) {
-                //courier arrives and takes the order
-                self.orderStatusLabel.text = "Courier pickedup order!"
-                //pickup order
-                self.pickupOrder()
-                
-            }
         }
     }
     
     func processIncomingOrders(_ incomingOrders: [Order]) {
         //process the order in different groups
         for order in incomingOrders {
-            if order.shelfType == .hotShelf && self.hotShelf.count <= 10 {
+            if order.shelfType == .hot && self.hotShelf.count < 10 {
                 self.hotShelf.append(order)
             }
-            else if order.shelfType == .coldShelf && self.hotShelf.count <= 10 {
+            else if order.shelfType == .cold && self.coldShelf.count < 10 {
                 self.coldShelf.append(order)
             }
-            else if order.shelfType == .frozenShelf && self.hotShelf.count <= 10 {
+            else if order.shelfType == .frozen && self.frozenShelf.count < 10 {
                 self.frozenShelf.append(order)
             }
-            else if self.overflowShelf.count <= 15 {
+            else if self.overflowShelf.count < 15 {
                 self.overflowShelf.append(order)
             }
             else {
                 //remove random order from overflowShelf
-                let randomOrder = Int.random(in: 0 ... 15)
+                let randomOrder = Int.random(in: 0 ..< self.overflowShelf.count)
                 self.overflowShelf.remove(at: randomOrder)
                 self.overflowShelf.append(order)
             }
@@ -94,23 +102,36 @@ class OrderViewController: UIViewController {
         }
     }
     
-    func pickupOrder() {
+    func pickupOrder(_ timer: Timer) {
+        var pickedupOrder: Order?
         if self.hotShelf.count > 0 {
+            pickedupOrder = self.hotShelf[0]
             self.hotShelf.remove(at: 0)
         }
         else if self.coldShelf.count > 0 {
+            pickedupOrder = self.coldShelf[0]
             self.coldShelf.remove(at: 0)
         }
-        else if self.frozenShelf.count > 10 {
+        else if self.frozenShelf.count > 0 {
+            pickedupOrder = self.frozenShelf[0]
             self.frozenShelf.remove(at: 0)
         }
         else if self.overflowShelf.count > 0 {
+            pickedupOrder = self.overflowShelf[0]
             self.overflowShelf.remove(at: 0)
         } else {
             //all orders empty and no orders left.
             print("all orders successfully delivered")
+            timer.invalidate()
         }
-        
+        if let pickedupOrder = pickedupOrder {
+            self.orderIdLabel.text = pickedupOrder.orderId
+            self.orderName.text = pickedupOrder.name
+            self.tempLabel.text = pickedupOrder.temp
+            self.shelfLabel.text = String(pickedupOrder.shelfLife)
+            self.decayLabel.text = String(pickedupOrder.decayRate)
+        }
+
         self.ordersTableView.reloadData()
     }
 
@@ -155,6 +176,7 @@ extension OrderViewController : UITableViewDelegate, UITableViewDataSource {
          }
          if indexPath.row == 3 {
              cell.kitchenName.text = "Overflow shelf"
+             cell.capacity.text = "\(self.overflowShelf.count)"
          }
 
          return cell

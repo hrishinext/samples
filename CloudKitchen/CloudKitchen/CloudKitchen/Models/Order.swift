@@ -22,6 +22,6 @@ struct Order {
         self.temp = inputDictionary["temp"] as! String
         self.shelfLife = inputDictionary["shelfLife"] as! Int
         self.decayRate = inputDictionary["decayRate"] as! Double
-        self.shelfType = ShelfType(rawValue: self.temp)!
+        self.shelfType = ShelfType(rawValue: inputDictionary["temp"] as! String)!
     }
 }
