@@ -10,10 +10,9 @@ import Foundation
 
 class Utils {
     
-    static func calculateOrderValue(_ order:Order , _ shelfType: ShelfType) -> Int {
-        
-        let shelfDecayModifier: Int = (shelfType == ShelfType.overflow) ? 2 : 1
-        let value = ((order.shelfLife) - (Int(order.decayRate) * 1 * shelfDecayModifier)) / order.shelfLife
+    static func calculateOrderValue(_ order:Order) -> Int {
+        let shelfDecayModifier: Int = (order.shelfType == ShelfType.overflow) ? 2 : 1
+        let value = ((order.shelfLife) - (Int(order.decayRate) * order.orderAge * shelfDecayModifier)) / order.shelfLife
         return value
     }
     

@@ -13,13 +13,16 @@ class OrderViewController: UIViewController {
     @IBOutlet var ordersTableView: UITableView!
     
     var orders: [Order] = []
-    var hotShelf: [Order] = []
-    var coldShelf: [Order] = []
-    var frozenShelf: [Order] = []
-    var overflowShelf: [Order] = []
+    var hotShelf: [String: Order] = [:]
+    var coldShelf: [String: Order] = [:]
+    var frozenShelf: [String: Order] = [:]
+    var overflowShelf: [String:Order] = [:]
     var timer: Timer?
     var courierTimer: Timer?
+    var orderAgeTimer: Timer?
+    var orderShelfLifeTimer: Timer?
     var currentOrderCount: Int = 0
+    var orderAgeLookup: [String: Order] = [:]
     @IBOutlet var orderStatusLabel: UILabel!
     @IBOutlet weak var orderIdLabel: UILabel!
     @IBOutlet weak var orderName: UILabel!
@@ -31,23 +34,20 @@ class OrderViewController: UIViewController {
         super.viewDidLoad()
         self.ordersTableView.delegate = self
         self.ordersTableView.dataSource = self
-        // Uncomment the following line to preserve selection between presentations
-        // self.clearsSelectionOnViewWillAppear = false
-
-        // Uncomment the following line to display an Edit button in the navigation bar for this view controller.
-        // self.navigationItem.rightBarButtonItem = self.editButtonItem
+        
         let orderApi = OrderApi()
-        orderApi.fetchOrders(success: { (ordersArray) in
+        orderApi.fetchOrders(success: { [weak self] (ordersArray) in
+            guard let self = self else { return }
             self.orders = ordersArray
             
             self.timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(self.fireTimer), userInfo: nil, repeats: true)
             
-            //process the data
         }) { (error) in
             print(error)
         }
         
-        self.courierTimer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true, block: { (timer) in
+        self.courierTimer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true, block: {  [weak self] (timer) in
+            guard let self = self else { return }
             let randomCourierTime = Int.random(in: 2 ... 6)
             DispatchQueue.main.asyncAfter(deadline: .now() + Double(randomCourierTime)) {
                 //courier arrives and takes the order
@@ -57,10 +57,31 @@ class OrderViewController: UIViewController {
             }
         })
         
+        self.orderAgeTimer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true, block: { [weak self] (timer) in
+            guard let self = self else { return }
+            for (key, valueOrder) in self.orderAgeLookup {
+                var value = valueOrder
+                value.orderAge += 1
+                self.orderAgeLookup[key] = value
+            }
+        })
+        
+        self.orderShelfLifeTimer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true, block: { [weak self](timer) in
+             guard let self = self else { return }
+            //process all the lookups and check the value.
+            for (key, orderValue) in self.orderAgeLookup {
+                
+                let value = Utils.calculateOrderValue(orderValue)
+                if value <= 0 {
+                    //remove that order from the list
+                    //how do i remove that order from the list.
+                    self.orderAgeLookup[key] = nil
+                }
+            }
+        })
     }
     
     @objc func fireTimer() {
-        print("Timer fired!")
         if self.currentOrderCount >= self.orders.count {
             timer?.invalidate()
         } else {
@@ -78,24 +99,25 @@ class OrderViewController: UIViewController {
         //process the order in different groups
         for order in incomingOrders {
             if order.shelfType == .hot && self.hotShelf.count < 10 {
-                self.hotShelf.append(order)
+                self.hotShelf[order.orderId] = order
             }
             else if order.shelfType == .cold && self.coldShelf.count < 10 {
-                self.coldShelf.append(order)
+                self.coldShelf[order.orderId] = order
             }
             else if order.shelfType == .frozen && self.frozenShelf.count < 10 {
-                self.frozenShelf.append(order)
+                self.frozenShelf[order.orderId] = order
             }
             else if self.overflowShelf.count < 15 {
-                self.overflowShelf.append(order)
+                self.overflowShelf[order.orderId] = order
             }
             else {
                 //remove random order from overflowShelf
-                let randomOrder = Int.random(in: 0 ..< self.overflowShelf.count)
-                self.overflowShelf.remove(at: randomOrder)
-                self.overflowShelf.append(order)
+                //let randomOrder = Int.random(in: 0 ..< self.overflowShelf.count)
+                let randomOrder = self.overflowShelf.randomElement()
+                self.overflowShelf[randomOrder!.key] = nil
+                //self.overflowShelf.append(order)
             }
-
+            self.orderAgeLookup[order.orderId] = order
         }
         DispatchQueue.main.async {
             self.ordersTableView.reloadData()
@@ -105,23 +127,29 @@ class OrderViewController: UIViewController {
     func pickupOrder(_ timer: Timer) {
         var pickedupOrder: Order?
         if self.hotShelf.count > 0 {
-            pickedupOrder = self.hotShelf[0]
-            self.hotShelf.remove(at: 0)
+            pickedupOrder = self.hotShelf.randomElement()!.value
+            self.hotShelf[pickedupOrder!.orderId] = nil
         }
         else if self.coldShelf.count > 0 {
-            pickedupOrder = self.coldShelf[0]
-            self.coldShelf.remove(at: 0)
+            pickedupOrder = self.coldShelf.randomElement()!.value
+            self.coldShelf[pickedupOrder!.orderId] = nil
         }
         else if self.frozenShelf.count > 0 {
-            pickedupOrder = self.frozenShelf[0]
-            self.frozenShelf.remove(at: 0)
+            pickedupOrder = self.frozenShelf.randomElement()!.value
+            self.frozenShelf[pickedupOrder!.orderId] = nil
         }
         else if self.overflowShelf.count > 0 {
-            pickedupOrder = self.overflowShelf[0]
-            self.overflowShelf.remove(at: 0)
+            pickedupOrder = self.overflowShelf.randomElement()!.value
+            self.overflowShelf[pickedupOrder!.orderId] = nil
         } else {
             //all orders empty and no orders left.
             print("all orders successfully delivered")
+            self.orderStatusLabel.text = "All orders delivered!"
+            self.orderIdLabel.text = ""
+            self.orderName.text = ""
+            self.tempLabel.text = ""
+            self.shelfLabel.text = ""
+            self.decayLabel.text = ""
             timer.invalidate()
         }
         if let pickedupOrder = pickedupOrder {
