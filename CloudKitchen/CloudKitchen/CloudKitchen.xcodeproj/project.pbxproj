@@ -7,13 +7,17 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E49E966E248E0CB900B4F126 /* UtilsTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E49E966D248E0CB900B4F126 /* UtilsTests.swift */; };
+		E49E966F248FF77200B4F126 /* Order.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4DA78DC248C54A1009C7093 /* Order.swift */; };
+		E49E9670248FF77500B4F126 /* Utils.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4DA78E1248C7EE7009C7093 /* Utils.swift */; };
+		E49E9671248FF77700B4F126 /* ShelfType.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4DA78E4248CA249009C7093 /* ShelfType.swift */; };
+		E49E9673249060DE00B4F126 /* OrderApiTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E49E9672249060DD00B4F126 /* OrderApiTests.swift */; };
 		E4DA7878248BE0C3009C7093 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4DA7877248BE0C3009C7093 /* AppDelegate.swift */; };
 		E4DA787A248BE0C3009C7093 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4DA7879248BE0C3009C7093 /* SceneDelegate.swift */; };
 		E4DA787F248BE0C3009C7093 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E4DA787D248BE0C3009C7093 /* Main.storyboard */; };
 		E4DA7882248BE0C3009C7093 /* CloudKitchen.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = E4DA7880248BE0C3009C7093 /* CloudKitchen.xcdatamodeld */; };
 		E4DA7884248BE0C8009C7093 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E4DA7883248BE0C8009C7093 /* Assets.xcassets */; };
 		E4DA7887248BE0C8009C7093 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E4DA7885248BE0C8009C7093 /* LaunchScreen.storyboard */; };
-		E4DA7892248BE0C8009C7093 /* CloudKitchenTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4DA7891248BE0C8009C7093 /* CloudKitchenTests.swift */; };
 		E4DA789E248BE371009C7093 /* OrderApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4DA789D248BE371009C7093 /* OrderApi.swift */; };
 		E4DA789F248BE371009C7093 /* OrderApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4DA789D248BE371009C7093 /* OrderApi.swift */; };
 		E4DA78A1248BEA09009C7093 /* CustomTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4DA78A0248BEA09009C7093 /* CustomTableViewCell.swift */; };
@@ -36,6 +40,8 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		E49E966D248E0CB900B4F126 /* UtilsTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UtilsTests.swift; sourceTree = "<group>"; };
+		E49E9672249060DD00B4F126 /* OrderApiTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderApiTests.swift; sourceTree = "<group>"; };
 		E4DA7874248BE0C3009C7093 /* CloudKitchen.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CloudKitchen.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E4DA7877248BE0C3009C7093 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E4DA7879248BE0C3009C7093 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -45,7 +51,6 @@
 		E4DA7886248BE0C8009C7093 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		E4DA7888248BE0C8009C7093 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E4DA788D248BE0C8009C7093 /* CloudKitchenTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = CloudKitchenTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
-		E4DA7891248BE0C8009C7093 /* CloudKitchenTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CloudKitchenTests.swift; sourceTree = "<group>"; };
 		E4DA7893248BE0C8009C7093 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		E4DA789D248BE371009C7093 /* OrderApi.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OrderApi.swift; sourceTree = "<group>"; };
 		E4DA78A0248BEA09009C7093 /* CustomTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomTableViewCell.swift; sourceTree = "<group>"; };
@@ -116,8 +121,9 @@
 		E4DA7890248BE0C8009C7093 /* CloudKitchenTests */ = {
 			isa = PBXGroup;
 			children = (
-				E4DA7891248BE0C8009C7093 /* CloudKitchenTests.swift */,
 				E4DA7893248BE0C8009C7093 /* Info.plist */,
+				E49E966D248E0CB900B4F126 /* UtilsTests.swift */,
+				E49E9672249060DD00B4F126 /* OrderApiTests.swift */,
 			);
 			path = CloudKitchenTests;
 			sourceTree = "<group>";
@@ -288,9 +294,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E49E9671248FF77700B4F126 /* ShelfType.swift in Sources */,
+				E49E9670248FF77500B4F126 /* Utils.swift in Sources */,
 				E4DA78A2248BEA09009C7093 /* CustomTableViewCell.swift in Sources */,
-				E4DA7892248BE0C8009C7093 /* CloudKitchenTests.swift in Sources */,
 				E4DA789F248BE371009C7093 /* OrderApi.swift in Sources */,
+				E49E9673249060DE00B4F126 /* OrderApiTests.swift in Sources */,
+				E49E966F248FF77200B4F126 /* Order.swift in Sources */,
+				E49E966E248E0CB900B4F126 /* UtilsTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

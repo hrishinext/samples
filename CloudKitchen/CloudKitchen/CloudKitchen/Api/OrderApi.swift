@@ -22,7 +22,7 @@ public class OrderApi {
                     let jsonResult: Array = try JSONSerialization.jsonObject(with: data as Data, options: JSONSerialization.ReadingOptions.mutableContainers) as! [AnyObject]
                     var orders = [Order]()
                     for orderValue in jsonResult {
-                        let order = Order(orderValue as! [String : AnyObject])
+                        let order = Order(orderValue as! [String : Any])
                         orders.append(order)
                     }
                     success(orders)
