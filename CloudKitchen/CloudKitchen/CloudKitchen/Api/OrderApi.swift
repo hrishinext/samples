@@ -29,6 +29,7 @@ public class OrderApi {
                     
                 } catch {
                     print("Error!! Unable to parse  json")
+                    failure(error)
                 }
             }
         }

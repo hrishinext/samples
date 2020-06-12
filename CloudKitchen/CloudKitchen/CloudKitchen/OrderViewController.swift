@@ -43,7 +43,9 @@ class OrderViewController: UIViewController {
             self.timer = Timer.scheduledTimer(timeInterval: 1.0, target: self, selector: #selector(self.fireTimer), userInfo: nil, repeats: true)
             
         }) { (error) in
-            print(error)
+            let alert = UIAlertController(title: "Error", message: "Something has gone wrong! Please try again.", preferredStyle: .alert)
+            alert.addAction(UIAlertAction(title: "Ok", style: .default, handler: nil))
+            self.present(alert, animated: true)
         }
         
         self.courierTimer = Timer.scheduledTimer(withTimeInterval: 1.0, repeats: true, block: {  [weak self] (timer) in
