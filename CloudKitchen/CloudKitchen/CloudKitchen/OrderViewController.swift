@@ -153,6 +153,9 @@ class OrderViewController: UIViewController {
             self.shelfLabel.text = ""
             self.decayLabel.text = ""
             timer.invalidate()
+            self.courierTimer?.invalidate()
+            self.orderAgeTimer?.invalidate()
+            self.orderShelfLifeTimer?.invalidate()
         }
         if let pickedupOrder = pickedupOrder {
             self.orderIdLabel.text = pickedupOrder.orderId
