@@ -20,7 +20,19 @@ class OrderApiTests: XCTestCase {
         }) { (error) in
             print(error)
         }
-        
+        wait(for: [expectation], timeout: 1)
+    }
+    
+    func testFetchOrdersCount() {
+        let expectation = self.expectation(description: "Stubs network call")
+        let orderApi = OrderApi()
+        orderApi.fetchOrders(success: { (orders: [Order]) in
+            print(orders)
+            XCTAssertEqual(orders.count, 132, "orders not correctly parsed")
+            expectation.fulfill()
+        }) { (error) in
+            print(error)
+        }
         wait(for: [expectation], timeout: 1)
     }
 
