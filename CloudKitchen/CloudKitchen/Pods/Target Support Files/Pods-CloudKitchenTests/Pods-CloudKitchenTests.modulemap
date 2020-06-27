@@ -1,0 +1,6 @@
+framework module Pods_CloudKitchenTests {
+  umbrella header "Pods-CloudKitchenTests-umbrella.h"
+
+  export *
+  module * { export * }
+}
