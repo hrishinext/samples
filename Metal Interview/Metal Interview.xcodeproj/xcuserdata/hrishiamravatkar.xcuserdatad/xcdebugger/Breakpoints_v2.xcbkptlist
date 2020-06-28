@@ -78,70 +78,6 @@
             filePath = "Metal Interview/Api/MovieApi.swift"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "23"
-            endingLineNumber = "23"
-            landmarkName = "getListMovies(_:_:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "06256B65-5D69-41B0-B399-FED83D646AE2"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Metal Interview/Api/MovieApi.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "25"
-            endingLineNumber = "25"
-            landmarkName = "getListMovies(_:_:)"
-            landmarkType = "7">
-            <Locations>
-               <Location
-                  uuid = "06256B65-5D69-41B0-B399-FED83D646AE2 - 1730d2f6cbfb75d2"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (Swift.Optional&lt;Foundation.Data&gt;, Swift.Optional&lt;__C.NSURLResponse&gt;, Swift.Optional&lt;Swift.Error&gt;) -&gt; () in Metal_Interview.MovieApi.getListMovies((Swift.Array&lt;Metal_Interview.Movie&gt;) -&gt; (), (Swift.Error) -&gt; ()) -&gt; ()"
-                  moduleName = "Metal Interview"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/hrishiamravatkar/interviews/samples/Metal%20Interview/Metal%20Interview/Api/MovieApi.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "25"
-                  endingLineNumber = "25"
-                  offsetFromSymbolStart = "580">
-               </Location>
-               <Location
-                  uuid = "06256B65-5D69-41B0-B399-FED83D646AE2 - 1730d2f6cbfb75d2"
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "closure #1 (Swift.Optional&lt;Foundation.Data&gt;, Swift.Optional&lt;__C.NSURLResponse&gt;, Swift.Optional&lt;Swift.Error&gt;) -&gt; () in Metal_Interview.MovieApi.getListMovies((Swift.Array&lt;Metal_Interview.Movie&gt;) -&gt; (), (Swift.Error) -&gt; ()) -&gt; ()"
-                  moduleName = "Metal Interview"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/hrishiamravatkar/interviews/samples/Metal%20Interview/Metal%20Interview/Api/MovieApi.swift"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "25"
-                  endingLineNumber = "25"
-                  offsetFromSymbolStart = "2634">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "D30A498B-5199-40FD-B4C2-00907879788A"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Metal Interview/Api/MovieApi.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
             startingLineNumber = "27"
             endingLineNumber = "27"
             landmarkName = "getListMovies(_:_:)"
@@ -160,22 +96,6 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "36"
             endingLineNumber = "36"
-            landmarkName = "getListMovies(_:_:)"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            uuid = "8888E5C2-6661-45B9-8A60-F1D780C20E97"
-            shouldBeEnabled = "No"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Metal Interview/Api/MovieApi.swift"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "24"
-            endingLineNumber = "24"
             landmarkName = "getListMovies(_:_:)"
             landmarkType = "7">
          </BreakpointContent>

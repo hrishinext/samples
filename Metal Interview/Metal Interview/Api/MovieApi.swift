@@ -20,11 +20,11 @@ class MovieApi {
         
         //get shared session and async task
         URLSession.shared.dataTask(with: urlValue) { (data, response, error) in
-            if let error = error {
-                failure(error)
-            } else if
-                let response = response as? HTTPURLResponse ,
-                let data = data, response.statusCode == 200 {
+            guard let response = response as? HTTPURLResponse, let data = data, let error = error else {
+                return
+            }
+
+            if response.statusCode == 200 {
                 //here deserialize the json data
                 guard let jsonArray = try? JSONSerialization.jsonObject(with: data, options: JSONSerialization.ReadingOptions.mutableContainers) as? [[String: Any]] else {
                     print("Not containing JSON")
@@ -38,6 +38,8 @@ class MovieApi {
                     movies.append(movie)
                 }
                 success(movies)
+            } else {
+                failure(error)
             }
         }.resume()
         
